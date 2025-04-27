@@ -9,9 +9,10 @@ This project demonstrates how to train and evaluate a simple model using PyTorch
 
 ## Setup
 
-1. Ensure you have PyTorch installed in your environment.
-2. Run `train.py` to train the model.
-3. Run `evaluate.py` to evaluate the model's performance.
+1. Install the required packages via conda and the environment `.yml` files.
+2. Run `clean_data.py` to generate the initial and cleaned datasets.s
+3. Run `train.py` to train the model.
+4. Run `evaluate.py` to evaluate the model's performance.
 
 ## Environment Setup
 
