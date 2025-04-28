@@ -2,6 +2,20 @@ import polars as pl
 import matplotlib.pyplot as plt
 import os
 
+# Function to clean the job description text
+def clean_job_description(dataset):
+    
+    # Remove the following characters
+    unwanted_chars = ['\n', '\n\n', '\n\n\n' , '\n\n\n\n','\r', '\t', '*', '  ', '   ']
+    mapping = {}
+    for char in unwanted_chars:
+        mapping[char] = ''
+    mapping['**'] = ' '
+    
+    dataset = dataset.with_columns(cleaned_description=pl.col('description').str.replace_many(mapping))
+
+    return dataset
+
 def load_data(file_path):
     """Load data from an Excel file using Polars."""
     dataset = pl.read_excel(file_path, sheet_name='Sheet1')
@@ -18,13 +32,15 @@ def load_data(file_path):
 
     result = dataset.select(pl.col(columns_to_select))
 
+    result = clean_job_description(result)
+
     return result
 
 
 def print_example(dataset, index):
     """Print an example row from the dataset."""
     if index < len(dataset):
-        # Print every column and the corresponding value
+        # Print every column and the corresponding value. Print raw value
         for column in dataset.columns:
             print(f"{column}: {dataset[index, column]}")
         
